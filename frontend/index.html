@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="PracticeLog — Track your coding practice topics, problems, and attempts with a beautiful modern dashboard."/>
+  <title>PracticeLog — Track Your Coding Journey</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head
+<body>
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="logo">
+        <div class="logo-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="16 18 22 12 16 6"></polyline>
+            <polyline points="8 6 2 12 8 18"></polyline>
+          </svg>
+        </div>
+        <span class="logo-text">PracticeLog</span>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <button class="nav-item active" id="nav-dashboard" onclick="showView('dashboard')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+        Dashboard
+      </button>
+      <button class="nav-item" id="nav-topics" onclick="showView('topics')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+        Topics
+        <span class="nav-badge" id="topics-count">0</span>
+      </button>
+      <button class="nav-item" id="nav-problems" onclick="showView('problems')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+        Problems
+        <span class="nav-badge" id="problems-count">0</span>
+      </button>
+      <button class="nav-item" id="nav-attempts" onclick="showView('attempts')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+        Attempts
+        <span class="nav-badge" id="attempts-count">0</span>
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="db-status" id="db-status">
+        <span class="status-dot"></span>
+        <span class="status-text">Checking...</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Top Bar -->
+    <header class="topbar">
+      <button class="menu-toggle" id="menu-toggle" onclick="toggleSidebar()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      </button>
+      <div class="topbar-title" id="topbar-title">Dashboard</div>
+      <button class="btn-primary" id="topbar-action-btn" onclick="openCreateModal()" style="display:none">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+        <span id="topbar-action-label">Add New</span>
+      </button>
+    </header>
+
+    <!-- Views -->
+    <div class="view-container">
+
+      <!-- Dashboard View -->
+      <section class="view active" id="view-dashboard">
+        <div class="dashboard-hero">
+          <div class="hero-text">
+            <h1>Welcome to <span class="gradient-text">PracticeLog</span></h1>
+            <p>Track your coding journey — organize topics, problems, and attempts all in one place.</p>
+          </div>
+          <div class="hero-art">
+            <div class="orbit-ring">
+              <div class="orbit-dot d1"></div>
+              <div class="orbit-dot d2"></div>
+              <div class="orbit-dot d3"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card" id="stat-topics">
+            <div class="stat-icon topics-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            </div>
+            <div class="stat-info">
+              <div class="stat-value" id="dash-topics-count">—</div>
+              <div class="stat-label">Topics</div>
+            </div>
+          </div>
+          <div class="stat-card" id="stat-problems">
+            <div class="stat-icon problems-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+            </div>
+            <div class="stat-info">
+              <div class="stat-value" id="dash-problems-count">—</div>
+              <div class="stat-label">Problems</div>
+            </div>
+          </div>
+          <div class="stat-card" id="stat-attempts">
+            <div class="stat-icon attempts-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+            </div>
+            <div class="stat-info">
+              <div class="stat-value" id="dash-attempts-count">—</div>
+              <div class="stat-label">Attempts</div>
+            </div>
+          </div>
+          <div class="stat-card" id="stat-completed">
+            <div class="stat-icon completed-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+            </div>
+            <div class="stat-info">
+              <div class="stat-value" id="dash-completed-count">—</div>
+              <div class="stat-label">Completed</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="recent-section">
+          <h2>Recent Attempts</h2>
+          <div class="recent-list" id="recent-attempts-list">
+            <div class="empty-state">
+              <div class="empty-icon">📋</div>
+              <p>No attempts yet. Start by adding a topic!</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Topics View -->
+      <section class="view" id="view-topics">
+        <div class="list-header">
+          <div class="list-search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" id="topics-search" placeholder="Search topics..." oninput="filterTopics()"/>
+          </div>
+        </div>
+        <div class="cards-grid" id="topics-list">
+          <div class="skeleton-card"></div>
+          <div class="skeleton-card"></div>
+          <div class="skeleton-card"></div>
+        </div>
+      </section>
+
+      <!-- Problems View -->
+      <section class="view" id="view-problems">
+        <div class="list-header">
+          <div class="list-search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" id="problems-search" placeholder="Search problems..." oninput="filterProblems()"/>
+          </div>
+          <div class="filter-group">
+            <select id="problems-topic-filter" class="filter-select" onchange="filterProblems()">
+              <option value="">All Topics</option>
+            </select>
+          </div>
+        </div>
+        <div class="cards-grid" id="problems-list">
+          <div class="skeleton-card"></div>
+          <div class="skeleton-card"></div>
+          <div class="skeleton-card"></div>
+        </div>
+      </section>
+
+      <!-- Attempts View -->
+      <section class="view" id="view-attempts">
+        <div class="list-header">
+          <div class="list-search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" id="attempts-search" placeholder="Search attempts..." oninput="filterAttempts()"/>
+          </div>
+          <div class="filter-group">
+            <select id="attempts-status-filter" class="filter-select" onchange="filterAttempts()">
+              <option value="">All Statuses</option>
+              <option value="completed">✅ Completed</option>
+              <option value="attempted">🔄 Attempted</option>
+              <option value="failed">❌ Failed</option>
+            </select>
+          </div>
+        </div>
+        <div class="attempts-table-wrap">
+          <table class="attempts-table" id="attempts-table">
+            <thead>
+              <tr>
+                <th>Problem</th>
+                <th>Topic</th>
+                <th>Status</th>
+                <th>Notes</th>
+                <th>Date</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="attempts-tbody">
+              <tr><td colspan="6" class="loading-row">Loading...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Modal Overlay -->
+  <div class="modal-overlay" id="modal-overlay" onclick="closeModal()"></div>
+
+  <!-- Modal -->
+  <div class="modal" id="modal" role="dialog" aria-modal="true">
+    <div class="modal-header">
+      <h3 id="modal-title">Add Topic</h3>
+      <button class="modal-close" id="modal-close-btn" onclick="closeModal()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+    <div class="modal-body" id="modal-body">
+      <!-- Dynamic form content -->
+    </div>
+    <div class="modal-footer">
+      <button class="btn-ghost" onclick="closeModal()">Cancel</button>
+      <button class="btn-primary" id="modal-submit-btn" onclick="handleModalSubmit()">Save</button>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Confirm Dialog -->
+  <div class="modal-overlay" id="confirm-overlay" onclick="closeConfirm()"></div>
+  <div class="modal confirm-modal" id="confirm-modal">
+    <div class="modal-header">
+      <h3 id="confirm-title">Confirm Delete</h3>
+    </div>
+    <div class="modal-body">
+      <p id="confirm-message">Are you sure you want to delete this item?</p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-ghost" onclick="closeConfirm()">Cancel</button>
+      <button class="btn-danger" id="confirm-ok-btn">Delete</button>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
