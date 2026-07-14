@@ -83,6 +83,61 @@ body { background: var(--bg); color: var(--text); min-height: 100vh; display: fl
 }
 
 .sidebar-footer { padding: 16px 20px; border-top: 1px solid var(--border); }
+.developer-profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+}
+.developer-profile .avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--accent3));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+}
+.developer-profile .profile-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.developer-profile .profile-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.developer-profile .profile-link {
+  font-size: 0.75rem;
+  color: var(--text2);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: color 0.2s;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.developer-profile .profile-link:hover {
+  color: var(--accent);
+}
+.developer-profile .profile-link svg {
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+}
 .db-status { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; color: var(--text3); }
 .status-dot {
   width: 8px; height: 8px; border-radius: 50%;
