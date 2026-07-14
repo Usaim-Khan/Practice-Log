@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Depends, status, Path, Query,HTTPException
-from fastapi.middleware.cors import CORSMiddleware
+# from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from sqlalchemy import text
 from database import get_db, Base, engine
@@ -7,18 +7,22 @@ import models
 from schemas import *
 from typing import Annotated
 
+# for deployment
+from fastapi.staticfiles import StaticFiles
+
+
 Base.metadata.create_all(bind = engine)
 
 app = FastAPI()
 
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],      # Allow all origins (good for development)
-    allow_credentials=False,
-    allow_methods=["*"],      # Allow GET, POST, PUT, DELETE, etc.
-    allow_headers=["*"],      # Allow all headers
-)
+# app.add_middleware(
+#     CORSMiddleware,
+#     allow_origins=["*"],      # Allow all origins (good for development)
+#     allow_credentials=False,
+#     allow_methods=["*"],      # Allow GET, POST, PUT, DELETE, etc.
+#     allow_headers=["*"],      # Allow all headers
+# )
 
 @app.get("/health/db")
 def check_db(db: Session = Depends(get_db)):
@@ -195,6 +199,6 @@ def delete_attempt(attempt_id: Annotated[int, Path(gt=0)], db:Session = Depends(
 
     return
 
-
+app.mount("/", StaticFiles(directory="frontend", html=True), name="frontend")
 
 
